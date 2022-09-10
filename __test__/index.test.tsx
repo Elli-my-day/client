@@ -11,9 +11,7 @@ describe('Home Page', () => {
       </ThemeProvider>
     );
 
-    const heading = screen.getAllByRole('heading', {
-      name: /welcome to next\.js!/i,
-    });
+    const heading = screen.getByText(/welcome to next/i);
 
     expect(heading).toBeInTheDocument();
   });

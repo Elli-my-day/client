@@ -8,7 +8,12 @@ const theme: DefaultTheme = {
       light: 'blue',
       dark: 'green',
     },
+    background: {
+      paper: 'white',
+    },
   },
+  borderRadius: (unit) => `${unit * 10}px`,
+  spacing: (unit) => `${unit * 8}px`,
 };
 
 export default theme;
