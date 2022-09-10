@@ -32,6 +32,7 @@ jobs:
     
     - name: if fail
       uses: actions/github-script@v6
+      if: ${{ failure() }}
       with: 
         script: |
             github.rest.issues.createComment({
@@ -40,4 +41,3 @@ jobs:
               repo: context.repo.repo,
               body: 'test에서 문제 발생.'
             })
-      if: failure()
