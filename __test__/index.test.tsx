@@ -10,9 +10,5 @@ describe('Home Page', () => {
         <Home />
       </ThemeProvider>
     );
-
-    const heading = screen.getByText(/welcome to next/i);
-
-    expect(heading).toBeInTheDocument();
   });
 });

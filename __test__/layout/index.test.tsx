@@ -1,12 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import ThemeProvider from '@/context/ThemeProvider';
-import Header from '@/components/Header';
-import '@testing-library/jest-dom';
+import Layout from '@/layout/index';
 
 const Component = () => {
   return (
     <ThemeProvider>
-      <Header></Header>
+      <Layout>
+        <div></div>
+      </Layout>
     </ThemeProvider>
   );
 };
@@ -46,5 +47,23 @@ describe('Header Component', () => {
     });
 
     expect(loginButton).toBeInTheDocument();
+  });
+});
+
+describe('Navigation Component', () => {
+  it('should return diary', () => {
+    render(<Component />);
+
+    const diaryList = screen.getByText('일기');
+
+    expect(diaryList).toBeInTheDocument();
+  });
+
+  it('should return library', () => {
+    render(<Component />);
+
+    const libraryList = screen.getByText('도서관');
+
+    expect(libraryList).toBeInTheDocument();
   });
 });

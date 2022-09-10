@@ -5,6 +5,11 @@ interface IPalette {
   dark: string;
   contrastText?: string;
 }
+
+interface ISize {
+  header?: string;
+  navigation?: string;
+}
 declare module 'styled-components' {
   export interface DefaultTheme {
     mode: 'light' | 'dark';
@@ -21,5 +26,9 @@ declare module 'styled-components' {
     };
     borderRadius: (unit: number) => string;
     spacing: (unit: number) => string;
+    size: {
+      width?: ISize;
+      height?: ISize;
+    };
   }
 }

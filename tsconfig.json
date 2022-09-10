@@ -19,6 +19,7 @@
       "@/pages/*": ["src/pages/*"],
       "@/components/*": ["src/components/*"],
       "@/context/*": ["src/context/*"],
+      "@/layout/*": ["src/layout/*"],
       "@/styles/*": ["src/styles/*"]
     }
   },

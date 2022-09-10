@@ -28,6 +28,7 @@ module.exports = {
     '^@/pages/(.*)$': '<rootDir>/src/pages/$1',
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
     '^@/context/(.*)$': '<rootDir>/src/context/$1',
+    '^@/layout/(.*)$': '<rootDir>/src/layout/$1',
     '^@/styles/(.*)$': '<rootDir>/src/styles/$1',
   },
   // Add more setup options before each test is run

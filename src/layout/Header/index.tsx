@@ -3,7 +3,7 @@ import * as S from './styles';
 
 const Header = () => {
   return (
-    <S.HeaderContainer display="flex" justifyContent="space-between" alignItems="center">
+    <S.HeaderContainer>
       <div data-testid="logo">로고</div>
       <div>
         <input type="text" placeholder="search" />
