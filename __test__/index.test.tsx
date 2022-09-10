@@ -12,7 +12,7 @@ describe('Home Page', () => {
     );
 
     const heading = screen.getAllByRole('heading', {
-      name: /welcome to next\.js!/i,
+      name: /welcome to next\.j!/i,
     });
 
     expect(heading).toBeInTheDocument();
