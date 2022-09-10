@@ -21,4 +21,12 @@ export const NavigationWrapper = styled.div`
   position: fixed;
 `;
 
-export const MainWrapper = styled.div``;
+export const MainWrapper = styled.div`
+  position: absolute;
+  top: ${(props) => props.theme.size.height?.header};
+  left: ${(props) => props.theme.size.width?.navigation};
+  max-width: ${(props) => `calc(100% - ${props.theme.size.width?.navigation})`};
+  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+`;
