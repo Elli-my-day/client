@@ -28,7 +28,7 @@ jobs:
     - run: yarn install
     
     - name: start test    
-      run: yarn run test
+      run: yarn run test:all
     
     - name: if fail
       uses: actions/github-script@v6
