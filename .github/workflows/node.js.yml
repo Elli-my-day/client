@@ -28,7 +28,7 @@ jobs:
     - run: npm ci
     
     - name: start test    
-    - run: npm test
+      run: npm test
     
     - name: if fail
       uses: actions/github-script@v6
