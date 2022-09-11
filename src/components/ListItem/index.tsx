@@ -1,5 +1,5 @@
 import React from 'react';
-import HoverEffect from 'src/base/HoverEffect';
+import HoverEffect from '@/base/HoverEffect';
 import * as S from './styles';
 
 interface IProps {

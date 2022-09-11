@@ -18,7 +18,7 @@ const theme: DefaultTheme = {
       disabled: 'rgba(0, 0, 0, 0.26)',
     },
   },
-  borderRadius: (unit) => `${unit * 10}px`,
+  borderRadius: (unit) => `${unit * 8}px`,
   spacing: (unit) => `${unit * 8}px`,
   size: {
     width: {

@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '@/components/Button';
 import * as S from './styles';
 
 const Header = () => {
@@ -7,8 +8,8 @@ const Header = () => {
       <div data-testid="logo">로고</div>
       <div>
         <input type="text" placeholder="search" />
-        <button aria-label="change mode">mode</button>
-        <button aria-label="login">Login</button>
+        <Button aria-label="change mode">mode</Button>
+        <Button aria-label="login">Login</Button>
       </div>
     </S.HeaderContainer>
   );

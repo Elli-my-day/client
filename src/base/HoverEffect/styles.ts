@@ -4,6 +4,7 @@ export const EffectContainer = styled.div((props) => ({
   width: '100%',
   height: '100%',
   position: 'absolute',
+  borderRadius: props.theme.borderRadius(1),
   top: 0,
   left: 0,
   right: 0,
