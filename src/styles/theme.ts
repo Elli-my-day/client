@@ -11,6 +11,7 @@ const theme: DefaultTheme = {
     background: {
       paper: 'white',
     },
+    border: 'rgba(0, 0, 0, 0.12)',
     action: {
       active: 'rgba(0, 0, 0, 0.30)',
       hover: 'rgba(0, 0, 0, 0.04)',

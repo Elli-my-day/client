@@ -6,4 +6,5 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
+  border-bottom: 1px solid ${(props) => props.theme.palette.border};
 `;

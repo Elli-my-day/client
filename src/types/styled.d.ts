@@ -23,6 +23,7 @@ declare module 'styled-components' {
       background: {
         paper: string;
       };
+      border: string;
       action: {
         active: string;
         hover: string;

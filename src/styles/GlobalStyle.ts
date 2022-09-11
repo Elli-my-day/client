@@ -4,6 +4,10 @@ import { normalize } from 'styled-normalize';
 const GlobalStyle = createGlobalStyle`
   ${normalize};
 
+  * {
+    box-sizing : border-box;
+  }
+
   html {
     height : 100vh;
     font-size: 62.5%;
