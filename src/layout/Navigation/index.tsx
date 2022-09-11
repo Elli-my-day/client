@@ -1,11 +1,12 @@
 import React from 'react';
+import ListItem from '@/components/ListItem';
 import * as S from './styles';
 
 const Navigation = () => {
   return (
     <S.NavigationContainer>
-      <S.NavigationListItem>일기</S.NavigationListItem>
-      <S.NavigationListItem>도서관</S.NavigationListItem>
+      <ListItem>일기</ListItem>
+      <ListItem>도서관</ListItem>
     </S.NavigationContainer>
   );
 };

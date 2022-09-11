@@ -8,11 +8,3 @@ export const NavigationContainer = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
 `;
-
-export const NavigationListItem = styled.div`
-  width: 100%;
-  height: 3rem;
-  padding: ${(props) => props.theme.spacing(1)};
-  display: flex;
-  align-items: center;
-`;
