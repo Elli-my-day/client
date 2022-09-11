@@ -23,6 +23,12 @@ declare module 'styled-components' {
       background: {
         paper: string;
       };
+      action: {
+        active: string;
+        hover: string;
+        selected: string;
+        disabled: string;
+      };
     };
     borderRadius: (unit: number) => string;
     spacing: (unit: number) => string;

@@ -11,6 +11,12 @@ const theme: DefaultTheme = {
     background: {
       paper: 'white',
     },
+    action: {
+      active: 'rgba(0, 0, 0, 0.30)',
+      hover: 'rgba(0, 0, 0, 0.04)',
+      selected: 'rgba(0, 0, 0, 0.08)',
+      disabled: 'rgba(0, 0, 0, 0.26)',
+    },
   },
   borderRadius: (unit) => `${unit * 10}px`,
   spacing: (unit) => `${unit * 8}px`,
