@@ -1,3 +1,4 @@
+import { HoverEffect } from '@/base/HoverEffect';
 import styled from 'styled-components';
 
 export const Container = styled.div<{ height: string }>`
@@ -7,4 +8,5 @@ export const Container = styled.div<{ height: string }>`
   padding: ${(props) => props.theme.spacing(1)};
   display: flex;
   align-items: center;
+  ${HoverEffect}
 `;

@@ -1,3 +1,4 @@
+import { HoverEffect } from '@/base/HoverEffect';
 import styled from 'styled-components';
 
 export const ButtonContainer = styled.button`
@@ -13,4 +14,5 @@ export const ButtonContainer = styled.button`
   user-select: none;
   background-color: transparent;
   position: relative;
+  ${HoverEffect}
 `;
