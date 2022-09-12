@@ -11,3 +11,12 @@ export const NavigationContainer = styled.div`
   position: sticky;
   top: 0;
 `;
+
+export const LogoWrapper = styled.div`
+  width: 100%;
+  height: ${(props) => props.theme.size.height?.header};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+`;

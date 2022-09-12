@@ -6,9 +6,8 @@ import * as S from './styles';
 const Header = () => {
   return (
     <S.HeaderContainer>
-      <div data-testid="logo">로고</div>
+      <Input type="text" placeholder="search" />
       <div>
-        <Input type="text" placeholder="search" />
         <Button aria-label="mode">mode</Button>
         <Button aria-label="login">Login</Button>
       </div>
