@@ -25,7 +25,7 @@ describe('Header Component', () => {
     render(<Component />);
 
     const modeChangeButton = screen.getByRole('button', {
-      name: /change mode/i,
+      name: /mode/i,
     });
 
     expect(modeChangeButton).toBeInTheDocument();

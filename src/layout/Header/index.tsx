@@ -9,7 +9,7 @@ const Header = () => {
       <div data-testid="logo">로고</div>
       <div>
         <Input type="text" placeholder="search" />
-        <Button aria-label="change mode">mode</Button>
+        <Button aria-label="mode">mode</Button>
         <Button aria-label="login">Login</Button>
       </div>
     </S.HeaderContainer>

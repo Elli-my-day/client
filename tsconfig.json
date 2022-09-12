@@ -20,6 +20,7 @@
       "@/base/*": ["src/base/*"],
       "@/components/*": ["src/components/*"],
       "@/context/*": ["src/context/*"],
+      "@/hooks/*": ["src/hooks/*"],
       "@/layout/*": ["src/layout/*"],
       "@/styles/*": ["src/styles/*"]
     }
