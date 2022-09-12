@@ -8,8 +8,12 @@ export const PageContainer = styled.div`
   position: relative;
 `;
 
-export const SideWrapper = styled.div`
-  width: ${(props) => props.theme.size.width?.navigation};
+export const SideWrapper = styled.div<{ open: boolean }>`
+  width: ${(props) =>
+    props.open
+      ? props.theme.size.width?.navigationOpend
+      : props.theme.size.width?.navigationClosed};
+  transition: width 150ms;
 `;
 
 export const MainWrapper = styled.div`

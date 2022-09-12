@@ -9,21 +9,18 @@ interface IProps {
 }
 
 const Layout = ({ children }: IProps) => {
-  const { navOpen, handleNavOpen } = useNavOpen();
+  const { navOpen } = useNavOpen();
 
   return (
     <S.PageContainer>
-      <S.SideWrapper>
+      <S.SideWrapper open={navOpen}>
         <Navigation />
       </S.SideWrapper>
       <S.MainWrapper>
         <S.HeaderWrapper>
           <Header />
         </S.HeaderWrapper>
-        <S.ContentWrapper>
-          <button onClick={handleNavOpen}>nav</button>
-          {children}
-        </S.ContentWrapper>
+        <S.ContentWrapper>{children}</S.ContentWrapper>
       </S.MainWrapper>
     </S.PageContainer>
   );

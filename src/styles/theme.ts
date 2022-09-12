@@ -23,7 +23,8 @@ const theme: DefaultTheme = {
   spacing: (unit) => `${unit * 8}px`,
   size: {
     width: {
-      navigation: '20rem',
+      navigationOpend: '20rem',
+      navigationClosed: '8rem',
     },
     height: {
       header: '5.2rem',

@@ -8,7 +8,8 @@ interface IPalette {
 
 interface ISize {
   header?: string;
-  navigation?: string;
+  navigationOpend?: string;
+  navigationClosed?: string;
 }
 declare module 'styled-components' {
   export interface DefaultTheme {
