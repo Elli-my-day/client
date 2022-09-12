@@ -13,20 +13,17 @@ const Layout = ({ children }: IProps) => {
 
   return (
     <S.PageContainer>
-      <S.HeaderWrapper>
-        <Header />
-      </S.HeaderWrapper>
-      {navOpen ? (
-        <S.NavigationWrapper>
-          <Navigation />
-        </S.NavigationWrapper>
-      ) : (
-        <></>
-      )}
-
+      <S.SideWrapper>
+        <Navigation />
+      </S.SideWrapper>
       <S.MainWrapper>
-        <button onClick={handleNavOpen}>nav</button>
-        {children}
+        <S.HeaderWrapper>
+          <Header />
+        </S.HeaderWrapper>
+        <S.ContentWrapper>
+          <button onClick={handleNavOpen}>nav</button>
+          {children}
+        </S.ContentWrapper>
       </S.MainWrapper>
     </S.PageContainer>
   );
