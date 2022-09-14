@@ -31,6 +31,7 @@ module.exports = {
     '^@/context/(.*)$': '<rootDir>/src/context/$1',
     '^@/hooks/(.*)$': '<rootDir>/src/hooks/$1',
     '^@/layout/(.*)$': '<rootDir>/src/layout/$1',
+    '^@/assets/(.*)$': '<rootDir>/src/assets/$1',
     '^@/styles/(.*)$': '<rootDir>/src/styles/$1',
   },
   // Add more setup options before each test is run

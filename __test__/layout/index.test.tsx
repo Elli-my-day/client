@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import ThemeProvider from '@/context/ThemeProvider';
 import Layout from '@/layout/index';
 import NavOpenProvider from '@/context/NavOpenProvider';
@@ -54,10 +54,18 @@ describe('Navigation Component', () => {
     expect(logo).toHaveTextContent('로고');
   });
 
-  it('should return close button', () => {
+  it('should return "open" when close button clicked and vice versa', () => {
     render(<Component />);
 
-    const close = screen.getByText('닫기');
+    const close = screen.getByRole('button', { name: '닫기' });
+
+    fireEvent.click(close);
+
+    const open = screen.getByRole('button', { name: '열기' });
+
+    expect(open).toBeInTheDocument();
+
+    fireEvent.click(open);
 
     expect(close).toBeInTheDocument();
   });
