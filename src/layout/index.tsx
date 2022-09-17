@@ -12,7 +12,7 @@ const Layout = ({ children }: IProps) => {
   const { navOpen } = useNavOpen();
 
   return (
-    <S.PageContainer>
+    <S.LayoutContainer>
       <S.SideWrapper open={navOpen}>
         <Navigation />
       </S.SideWrapper>
@@ -22,7 +22,7 @@ const Layout = ({ children }: IProps) => {
         </S.HeaderWrapper>
         <S.ContentWrapper>{children}</S.ContentWrapper>
       </S.MainWrapper>
-    </S.PageContainer>
+    </S.LayoutContainer>
   );
 };
 

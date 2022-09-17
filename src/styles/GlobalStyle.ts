@@ -10,6 +10,8 @@ const GlobalStyle = createGlobalStyle`
 
   html {
     height : 100vh;
+    max-width : 100vw;
+    max-height : 100vh;
     font-size: 62.5%;
   }
 
@@ -17,6 +19,8 @@ const GlobalStyle = createGlobalStyle`
     position : relative;
     min-width : 100%;
     min-height : 100vh;
+    max-width : 100%;
+    max-height : 100%;
   }
 `;
 
