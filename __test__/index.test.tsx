@@ -10,11 +10,5 @@ describe('Home Page', () => {
         <Home />
       </ThemeProvider>
     );
-
-    const heading = screen.getAllByRole('heading', {
-      name: /welcome to next\.js!/i,
-    });
-
-    expect(heading).toBeInTheDocument();
   });
 });

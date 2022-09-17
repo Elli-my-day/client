@@ -1,8 +1,7 @@
 import type { NextPage } from 'next';
-import { Container } from '@/components/index';
 
 const Home: NextPage = () => {
-  return <Container>asdad</Container>;
+  return <div style={{ height: '2000px' }}></div>;
 };
 
 export default Home;

@@ -5,10 +5,15 @@ interface IPalette {
   dark: string;
   contrastText?: string;
 }
+
+interface ISize {
+  header?: string;
+  navigationOpend?: string;
+  navigationClosed?: string;
+}
 declare module 'styled-components' {
   export interface DefaultTheme {
     mode: 'light' | 'dark';
-    borderRadius?: string;
     palette: {
       common?: {
         black: string;
@@ -16,6 +21,22 @@ declare module 'styled-components' {
       };
       primary: IPalette;
       secondary?: IPalette;
+      background: {
+        paper: string;
+      };
+      border: string;
+      action: {
+        active: string;
+        hover: string;
+        selected: string;
+        disabled: string;
+      };
+    };
+    borderRadius: (unit: number) => string;
+    spacing: (unit: number) => string;
+    size: {
+      width?: ISize;
+      height?: ISize;
     };
   }
 }

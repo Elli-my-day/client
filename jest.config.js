@@ -1,7 +1,12 @@
-// jest.config.js
-module.exports = {
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const nextJest = require('next/jest');
+
+const createJestConfig = nextJest({
+  dir: './',
+});
+
+const customJestConfig = {
   collectCoverage: true,
-  // on node 14.x coverage provider v8 offers good speed and more or less good report
   coverageProvider: 'v8',
   collectCoverageFrom: [
     '**/*.{js,jsx,ts,tsx}',
@@ -26,12 +31,17 @@ module.exports = {
 
     // Handle module aliases
     '^@/pages/(.*)$': '<rootDir>/src/pages/$1',
+    '^@/base/(.*)$': '<rootDir>/src/base/$1',
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
     '^@/context/(.*)$': '<rootDir>/src/context/$1',
+    '^@/hooks/(.*)$': '<rootDir>/src/hooks/$1',
+    '^@/layout/(.*)$': '<rootDir>/src/layout/$1',
+    '^@/assets/(.*)$': '<rootDir>/src/assets/$1',
     '^@/styles/(.*)$': '<rootDir>/src/styles/$1',
+
+    // svg transform
+    '^.+\\.svg$': 'jest-svg-transformer',
   },
-  // Add more setup options before each test is run
-  // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
   testEnvironment: 'jsdom',
   transform: {
@@ -42,3 +52,18 @@ module.exports = {
   transformIgnorePatterns: ['/node_modules/', '^.+\\.module\\.(css|sass|scss)$'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
 };
+
+// https://github.com/vercel/next.js/issues/35634#issuecomment-1080942525
+const jestConfig = async () => {
+  const nextJestConfig = await createJestConfig(customJestConfig)();
+  return {
+    ...nextJestConfig,
+    moduleNameMapper: {
+      // Workaround to put our SVG stub first
+      '\\.svg': '<rootDir>/__mocks__/svg.js',
+      ...nextJestConfig.moduleNameMapper,
+    },
+  };
+};
+
+module.exports = jestConfig;
