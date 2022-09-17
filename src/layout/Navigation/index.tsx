@@ -10,9 +10,7 @@ const Navigation = () => {
   return (
     <S.NavigationContainer>
       <S.LogoWrapper>
-        <div data-testid="logo">
-          <Logo></Logo>
-        </div>
+        <Logo />
         <button onClick={handleNavOpen}> {navOpen ? '닫기' : '열기'}</button>
       </S.LogoWrapper>
 

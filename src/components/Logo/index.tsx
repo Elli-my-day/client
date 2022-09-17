@@ -7,7 +7,7 @@ import useNavOpen from '@/hooks/useNavOpen';
 const Logo = () => {
   const { navOpen } = useNavOpen();
 
-  return <div>{navOpen ? <FullLogoIcon /> : <LogoIcon />}</div>;
+  return <div data-testid="logo">{navOpen ? <FullLogoIcon /> : <LogoIcon />}</div>;
 };
 
 export default Logo;

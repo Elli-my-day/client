@@ -51,7 +51,7 @@ describe('Navigation Component', () => {
 
     const logo = screen.getByTestId('logo');
 
-    expect(logo).toHaveTextContent('로고');
+    expect(logo).toBeInTheDocument();
   });
 
   it('should return "open" when close button clicked and vice versa', () => {
