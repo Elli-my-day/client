@@ -7,25 +7,23 @@ const Component = () => {
 };
 
 describe('slide', () => {
-  it('should return date', () => {
+  beforeEach(() => {
     render(<Component></Component>);
+  });
 
+  it('should return date', () => {
     const date = screen.getByTitle('date');
 
     expect(date).toBeInTheDocument();
   });
 
   it('should return background image', () => {
-    render(<Component></Component>);
-
     const image = screen.getByAltText('background');
 
     expect(image).toBeInTheDocument();
   });
 
   it('should return summary', () => {
-    render(<Component></Component>);
-
     const summary = screen.getByTitle('summary');
 
     expect(summary).toBeInTheDocument();

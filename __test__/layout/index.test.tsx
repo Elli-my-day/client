@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import ThemeProvider from '@/context/ThemeProvider';
 import Layout from '@/layout/index';
 import NavOpenProvider from '@/context/NavOpenProvider';
@@ -16,9 +17,11 @@ const Component = () => {
 };
 
 describe('Header Component', () => {
-  it('should return light mode / dark mode button', () => {
-    render(<Component />);
+  beforeEach(() => {
+    render(<Component></Component>);
+  });
 
+  it('should return light mode / dark mode button', () => {
     const modeChangeButton = screen.getByRole('button', {
       name: /mode/i,
     });
@@ -27,16 +30,12 @@ describe('Header Component', () => {
   });
 
   it('should return search bar', () => {
-    render(<Component />);
-
     const searchBar = screen.getByPlaceholderText('search');
 
     expect(searchBar).toBeInTheDocument();
   });
 
   it('should return login button', () => {
-    render(<Component />);
-
     const loginButton = screen.getByRole('button', {
       name: /login/i,
     });
@@ -46,41 +45,37 @@ describe('Header Component', () => {
 });
 
 describe('Navigation Component', () => {
-  it('should return logo text', () => {
-    render(<Component />);
+  beforeEach(() => {
+    render(<Component></Component>);
+  });
 
+  it('should return logo text', () => {
     const logo = screen.getByTestId('logo');
 
     expect(logo).toBeInTheDocument();
   });
 
-  it('should return "open" when close button clicked and vice versa', () => {
-    render(<Component />);
-
+  it('should return "open" when close button clicked and vice versa', async () => {
     const close = screen.getByRole('button', { name: '닫기' });
 
-    fireEvent.click(close);
+    await userEvent.click(close);
 
     const open = screen.getByRole('button', { name: '열기' });
 
     expect(open).toBeInTheDocument();
 
-    fireEvent.click(open);
+    await userEvent.click(open);
 
     expect(close).toBeInTheDocument();
   });
 
   it('should return diary', () => {
-    render(<Component />);
-
     const diaryList = screen.getByText('일기');
 
     expect(diaryList).toBeInTheDocument();
   });
 
   it('should return library', () => {
-    render(<Component />);
-
     const libraryList = screen.getByText('도서관');
 
     expect(libraryList).toBeInTheDocument();

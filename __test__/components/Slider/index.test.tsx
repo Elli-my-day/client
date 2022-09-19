@@ -1,4 +1,5 @@
-import { screen, render, fireEvent } from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Slider from '@/components/Slider';
 
 const Component = () => {
@@ -6,9 +7,11 @@ const Component = () => {
 };
 
 describe('slider', () => {
-  it('left button should return translate(30%) from beginning', () => {
+  beforeEach(() => {
     render(<Component></Component>);
+  });
 
+  it('left button should return translate(30%) from beginning', () => {
     const slider = screen.getByTestId('slider');
 
     expect(slider).toHaveStyle({
@@ -16,9 +19,7 @@ describe('slider', () => {
     });
   });
 
-  it('click left, right button', () => {
-    render(<Component></Component>);
-
+  it('click left, right button', async () => {
     const leftButton = screen.getByRole('button', {
       name: 'slider-left-btn',
     });
@@ -30,21 +31,21 @@ describe('slider', () => {
     const slider = screen.getByTestId('slider');
 
     // right click => -10
-    fireEvent.click(rightButton);
+    await userEvent.click(rightButton);
 
     expect(slider).toHaveStyle({
       transform: 'translate(-10%)',
     });
 
     // left click => return to 30
-    fireEvent.click(leftButton);
+    await userEvent.click(leftButton);
 
     expect(slider).toHaveStyle({
       transform: 'translate(30%)',
     });
 
     // left click => not change when far left
-    fireEvent.click(leftButton);
+    await userEvent.click(leftButton);
 
     expect(slider).toHaveStyle({
       transform: 'translate(30%)',
