@@ -2,13 +2,12 @@ import React from 'react';
 import * as S from './styles';
 
 interface IProps {
-  key: number;
   content: number; // content
   center: number; // current center index
   index: number;
 }
 
-const Slide = ({ key, center, index, content }: IProps) => {
+const Slide = ({ center, index, content }: IProps) => {
   const location = () => {
     if (index < center) {
       return 'left';
@@ -20,8 +19,10 @@ const Slide = ({ key, center, index, content }: IProps) => {
   };
 
   return (
-    <S.Container key={key} location={location()}>
-      {content}
+    <S.Container location={location()}>
+      <div title="date"></div>
+      <img src="" alt="background" />
+      <div title="summary"></div>
     </S.Container>
   );
 };

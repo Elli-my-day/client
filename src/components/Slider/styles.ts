@@ -13,7 +13,7 @@ export const Slider = styled.div`
   height: 100%;
   display: inline-flex;
   align-items: center;
-  transition: transform 150ms;
+  transition: transform 700ms;
 `;
 
 export const LeftButton = styled.button`
