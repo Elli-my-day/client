@@ -2,16 +2,13 @@ import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Slider from '@/components/Slider';
 
-const Component = () => {
-  return <Slider></Slider>;
+const setup = () => {
+  render(<Slider></Slider>);
 };
 
 describe('slider', () => {
-  beforeEach(() => {
-    render(<Component></Component>);
-  });
-
   it('left button should return translate(30%) from beginning', () => {
+    setup();
     const slider = screen.getByTestId('slider');
 
     expect(slider).toHaveStyle({
@@ -20,6 +17,7 @@ describe('slider', () => {
   });
 
   it('click left, right button', async () => {
+    setup();
     const leftButton = screen.getByRole('button', {
       name: 'slider-left-btn',
     });

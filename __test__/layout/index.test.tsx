@@ -4,8 +4,8 @@ import ThemeProvider from '@/context/ThemeProvider';
 import Layout from '@/layout/index';
 import NavOpenProvider from '@/context/NavOpenProvider';
 
-const Component = () => {
-  return (
+const setup = () => {
+  render(
     <ThemeProvider>
       <NavOpenProvider>
         <Layout>
@@ -17,11 +17,8 @@ const Component = () => {
 };
 
 describe('Header Component', () => {
-  beforeEach(() => {
-    render(<Component></Component>);
-  });
-
   it('should return light mode / dark mode button', () => {
+    setup();
     const modeChangeButton = screen.getByRole('button', {
       name: /mode/i,
     });
@@ -30,12 +27,14 @@ describe('Header Component', () => {
   });
 
   it('should return search bar', () => {
+    setup();
     const searchBar = screen.getByPlaceholderText('search');
 
     expect(searchBar).toBeInTheDocument();
   });
 
   it('should return login button', () => {
+    setup();
     const loginButton = screen.getByRole('button', {
       name: /login/i,
     });
@@ -45,17 +44,15 @@ describe('Header Component', () => {
 });
 
 describe('Navigation Component', () => {
-  beforeEach(() => {
-    render(<Component></Component>);
-  });
-
   it('should return logo text', () => {
+    setup();
     const logo = screen.getByTestId('logo');
 
     expect(logo).toBeInTheDocument();
   });
 
   it('should return "open" when close button clicked and vice versa', async () => {
+    setup();
     const close = screen.getByRole('button', { name: '닫기' });
 
     await userEvent.click(close);
@@ -70,12 +67,14 @@ describe('Navigation Component', () => {
   });
 
   it('should return diary', () => {
+    setup();
     const diaryList = screen.getByText('일기');
 
     expect(diaryList).toBeInTheDocument();
   });
 
   it('should return library', () => {
+    setup();
     const libraryList = screen.getByText('도서관');
 
     expect(libraryList).toBeInTheDocument();
