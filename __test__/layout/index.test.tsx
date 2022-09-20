@@ -16,33 +16,6 @@ const setup = () => {
   );
 };
 
-describe('Header Component', () => {
-  it('should return light mode / dark mode button', () => {
-    setup();
-    const modeChangeButton = screen.getByRole('button', {
-      name: /mode/i,
-    });
-
-    expect(modeChangeButton).toBeInTheDocument();
-  });
-
-  it('should return search bar', () => {
-    setup();
-    const searchBar = screen.getByPlaceholderText('search');
-
-    expect(searchBar).toBeInTheDocument();
-  });
-
-  it('should return login button', () => {
-    setup();
-    const loginButton = screen.getByRole('button', {
-      name: /login/i,
-    });
-
-    expect(loginButton).toBeInTheDocument();
-  });
-});
-
 describe('Navigation Component', () => {
   it('should return logo text', () => {
     setup();
@@ -78,5 +51,23 @@ describe('Navigation Component', () => {
     const libraryList = screen.getByText('도서관');
 
     expect(libraryList).toBeInTheDocument();
+  });
+
+  it('should return light mode / dark mode button', () => {
+    setup();
+    const modeChangeButton = screen.getByRole('button', {
+      name: /mode/i,
+    });
+
+    expect(modeChangeButton).toBeInTheDocument();
+  });
+
+  it('should return login button', () => {
+    setup();
+    const loginButton = screen.getByRole('button', {
+      name: /login/i,
+    });
+
+    expect(loginButton).toBeInTheDocument();
   });
 });
