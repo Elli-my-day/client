@@ -7,6 +7,13 @@ const setup = () => {
 };
 
 describe('slide', () => {
+  it('should return today status', () => {
+    setup();
+    const status = screen.getByTitle('status');
+
+    expect(status).toBeInTheDocument();
+  });
+
   it('should return date', () => {
     setup();
     const date = screen.getByTitle('date');

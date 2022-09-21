@@ -1,13 +1,18 @@
 import React from 'react';
+import Image from 'next/image';
+import { IDiary } from '@/types/diary';
+import Status from '@/components/Status';
 import * as S from './styles';
 
 interface IProps {
-  content: number; // content
+  content: IDiary;
   center: number; // current center index
   index: number;
 }
 
 const Slide = ({ center, index, content }: IProps) => {
+  const { status, date, image, summary } = content;
+
   const location = () => {
     if (index < center) {
       return 'left';
@@ -20,9 +25,14 @@ const Slide = ({ center, index, content }: IProps) => {
 
   return (
     <S.Container location={location()}>
-      <div title="date"></div>
-      <img src="" alt="background" />
-      <div title="summary"></div>
+      <S.Status title="status">
+        <Status status={status} />
+      </S.Status>
+      <S.Date title="date">{date}</S.Date>
+      <S.Background>
+        <Image src="/images/sky.jpg" alt="background" layout="fill" objectFit="cover"></Image>
+      </S.Background>
+      <S.Summary title="summary">{summary}</S.Summary>
     </S.Container>
   );
 };

@@ -1,9 +1,35 @@
 import React, { useMemo, useState } from 'react';
 import Slide from '@/components/Slide';
 import * as S from './styles';
+import { IDiary } from '@/types/diary';
 
 const Slider = () => {
-  const list = [1, 2, 3, 4, 5];
+  const list: IDiary[] = [
+    {
+      status: 'sunny',
+      date: 20220921,
+      image: '',
+      summary: 'hi to all, 09 21',
+    },
+    {
+      status: 'cloudy',
+      date: 20220922,
+      image: '',
+      summary: 'hi to all , 09 22',
+    },
+    {
+      status: 'rainy',
+      date: 20220923,
+      image: '',
+      summary: 'hi to all , 09 23',
+    },
+    {
+      status: 'sunny',
+      date: 20220924,
+      image: '',
+      summary: 'hi to all , 09 24',
+    },
+  ];
 
   const [center, setCenter] = useState(0); // 가운데 오는 index
 
@@ -24,8 +50,8 @@ const Slider = () => {
   return (
     <S.Container>
       <S.Slider data-testid="slider" style={sliderStyle}>
-        {list.map((ele, index) => {
-          return <Slide key={ele} center={center} index={index} content={ele} />;
+        {list.map((content, index) => {
+          return <Slide key={content.date} center={center} index={index} content={content} />;
         })}
       </S.Slider>
       <S.LeftButton aria-label="slider-left-btn" onClick={handleClickLeftBtn}>
