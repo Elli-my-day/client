@@ -2,6 +2,11 @@ import { DefaultTheme } from 'styled-components';
 
 const theme: DefaultTheme = {
   mode: 'light',
+  breakpoints: {
+    small: 600,
+    medium: 768,
+    large: 992,
+  },
   palette: {
     primary: {
       main: 'red',

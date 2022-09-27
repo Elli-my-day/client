@@ -9,7 +9,7 @@ interface IProps {
 
 const ThemeProvider = ({ children }: IProps) => {
   return (
-    <StyledThemeProvider theme={theme}>
+    <StyledThemeProvider theme={{ ...theme }}>
       <GlobalStyle />
       {children}
     </StyledThemeProvider>

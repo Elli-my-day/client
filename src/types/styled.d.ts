@@ -14,6 +14,11 @@ interface ISize {
 declare module 'styled-components' {
   export interface DefaultTheme {
     mode: 'light' | 'dark';
+    breakpoints: {
+      small: number;
+      medium: number;
+      large: number;
+    };
     palette: {
       common?: {
         black: string;
