@@ -1,4 +1,3 @@
-import Header from '@/layout/Header';
 import Navigation from '@/layout/Navigation';
 import useNavOpen from '@/hooks/useNavOpen';
 import React from 'react';
@@ -12,17 +11,12 @@ const Layout = ({ children }: IProps) => {
   const { navOpen } = useNavOpen();
 
   return (
-    <S.PageContainer>
+    <S.LayoutContainer>
       <S.SideWrapper open={navOpen}>
         <Navigation />
       </S.SideWrapper>
-      <S.MainWrapper>
-        <S.HeaderWrapper>
-          <Header />
-        </S.HeaderWrapper>
-        <S.ContentWrapper>{children}</S.ContentWrapper>
-      </S.MainWrapper>
-    </S.PageContainer>
+      <S.MainWrapper>{children}</S.MainWrapper>
+    </S.LayoutContainer>
   );
 };
 
