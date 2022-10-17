@@ -7,7 +7,6 @@ export const NavigationContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  border-right: 1px solid ${(props) => props.theme.palette.border};
   position: sticky;
   top: 0;
 `;
@@ -18,7 +17,7 @@ export const TopNav = styled.div`
 
 export const LogoWrapper = styled.div`
   width: 100%;
-  height: ${(props) => props.theme.size.height?.header};
+  height: 5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -31,6 +30,6 @@ export const BottomNav = styled.div`
 
 export const LoginWrapper = styled.div`
   width: 100%;
-  height: ${(props) => props.theme.size.height?.header};
+  height: 5rem;
   border: 1px solid black;
 `;

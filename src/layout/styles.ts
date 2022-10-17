@@ -1,4 +1,3 @@
-import { NavigationContainer } from './Navigation/styles';
 import styled from 'styled-components';
 
 export const LayoutContainer = styled.div`
@@ -10,10 +9,7 @@ export const LayoutContainer = styled.div`
 `;
 
 export const SideWrapper = styled.div<{ open: boolean }>`
-  width: ${(props) =>
-    props.open
-      ? props.theme.size.width?.navigationOpend
-      : props.theme.size.width?.navigationClosed};
+  width: ${(props) => (props.open ? '20rem' : '5rem')};
   transition: width 150ms;
 `;
 

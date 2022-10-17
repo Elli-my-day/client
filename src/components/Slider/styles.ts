@@ -1,5 +1,4 @@
-import device from '@/styles/device';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import tw from 'twin.macro';
 
 export const Container = styled.div`
