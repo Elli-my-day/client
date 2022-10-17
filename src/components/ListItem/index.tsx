@@ -6,7 +6,7 @@ interface IProps {
   height?: string;
 }
 
-const ListItem = ({ children, height = '3rem' }: IProps) => {
+const ListItem = ({ children, height = '4rem' }: IProps) => {
   return <S.Container height={height}>{children}</S.Container>;
 };
 

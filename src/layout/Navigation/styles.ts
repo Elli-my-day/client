@@ -14,6 +14,11 @@ export const LogoWrapper = styled.div`
   ${tw`w-full h-20 flex justify-between items-center p-2`}
 `;
 
+export const ListLink = styled.a<{ open: boolean }>`
+  ${tw`w-full flex justify-center items-center`}
+  ${({ open }) => open && tw`justify-start`}
+`;
+
 export const BottomNav = styled.div`
   ${tw`w-full`}
 `;

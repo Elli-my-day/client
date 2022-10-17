@@ -7,6 +7,8 @@ import Button from '@/components/Button';
 import IconButton from '@/components/IconButton';
 import { CgMinimizeAlt } from 'react-icons/cg';
 import { VscColorMode } from 'react-icons/vsc';
+import { FiBook } from 'react-icons/fi';
+import { HiOutlinePencil } from 'react-icons/hi';
 
 import * as S from './styles';
 
@@ -21,15 +23,22 @@ const Navigation = () => {
         </S.LogoWrapper>
         <ListItem>
           <Link href="/diary">
-            <a className="w-full">일기</a>
+            <S.ListLink open={navOpen}>
+              <FiBook size="20" />
+              {navOpen && <h2 className="ml-4 text-2xl">일기</h2>}
+            </S.ListLink>
           </Link>
         </ListItem>
         <ListItem>
           <Link href="/study">
-            <a className="w-full">서재</a>
+            <S.ListLink open={navOpen}>
+              <HiOutlinePencil size="20" />
+              {navOpen && <h2 className="ml-4 text-2xl">서재</h2>}
+            </S.ListLink>
           </Link>
         </ListItem>
       </S.TopNav>
+
       <S.BottomNav>
         <S.ButtonsWrapper open={navOpen}>
           <IconButton aria-label="mode">
