@@ -1,10 +1,7 @@
 import styled from 'styled-components';
+import tw from 'twin.macro';
 
 export const Container = styled.div<{ height: string }>`
-  width: 100%;
   height: ${(props) => props.height};
-  position: relative;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+  ${tw`w-full relative flex items-center cursor-pointer hover:bg-gray-100 p-4`}
 `;

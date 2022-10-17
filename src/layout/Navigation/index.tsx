@@ -1,9 +1,14 @@
 import React from 'react';
+import Link from 'next/link';
 import ListItem from '@/components/ListItem';
-import * as S from './styles';
 import useNavOpen from '@/hooks/useNavOpen';
 import Logo from '@/components/Logo';
 import Button from '@/components/Button';
+import IconButton from '@/components/IconButton';
+import { CgMinimizeAlt } from 'react-icons/cg';
+import { VscColorMode } from 'react-icons/vsc';
+
+import * as S from './styles';
 
 const Navigation = () => {
   const { navOpen, handleNavOpen } = useNavOpen();
@@ -13,13 +18,28 @@ const Navigation = () => {
       <S.TopNav>
         <S.LogoWrapper>
           <Logo />
-          <button onClick={handleNavOpen}> {navOpen ? '닫기' : '열기'}</button>
         </S.LogoWrapper>
-        <ListItem>일기</ListItem>
-        <ListItem>도서관</ListItem>
+        <ListItem>
+          <Link href="/diary">
+            <a className="w-full">일기</a>
+          </Link>
+        </ListItem>
+        <ListItem>
+          <Link href="/study">
+            <a className="w-full">서재</a>
+          </Link>
+        </ListItem>
       </S.TopNav>
       <S.BottomNav>
-        <Button aria-label="mode">mode</Button>
+        <S.ButtonsWrapper open={navOpen}>
+          <IconButton aria-label="mode">
+            <VscColorMode size="20" />
+          </IconButton>
+          <IconButton onClick={handleNavOpen}>
+            <CgMinimizeAlt size="20" />
+          </IconButton>
+        </S.ButtonsWrapper>
+
         <S.LoginWrapper>
           <Button aria-label="login">Login</Button>
         </S.LoginWrapper>
