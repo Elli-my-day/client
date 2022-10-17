@@ -1,5 +1,6 @@
 import device from '@/styles/device';
 import styled, { css } from 'styled-components';
+import tw from 'twin.macro';
 
 export const Container = styled.div`
   width: 100%;
@@ -27,4 +28,8 @@ export const RightButton = styled.button`
   position: absolute;
   top: 50%;
   right: 5%;
+`;
+
+export const Heading = styled.h1`
+  ${tw`font-bold text-4xl text-blue-100 font-sans`}
 `;

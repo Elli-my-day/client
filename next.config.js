@@ -2,14 +2,16 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  compiler: {
-    styledComponents: true,
-  },
+  // compiler: {
+  //   styledComponents: true,
+  // },
   webpack: (config, options) => {
+    //svgr
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
     });
+
     return config;
   },
 };
