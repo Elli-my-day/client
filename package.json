@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@fullcalendar/common": "^5.11.3",
+    "@fullcalendar/core": "^5.11.3",
     "@fullcalendar/daygrid": "^5.11.3",
     "@fullcalendar/react": "^5.11.2",
     "next": "12.2.5",
