@@ -16,4 +16,13 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+// for transpiling all ESM @fullcalendar/* packages
+// also, for piping fullcalendar thru babel (to learn why, see babel.config.js)
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withTM = require('next-transpile-modules')([
+  '@fullcalendar/react',
+  '@fullcalendar/common',
+  '@fullcalendar/daygrid',
+]);
+
+module.exports = withTM(nextConfig);
