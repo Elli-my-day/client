@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
 import { throttle } from 'lodash';
 import FullCalendar, { type DateSelectArg } from '@fullcalendar/react'; // must go before plugins
 import interactionPlugin from '@fullcalendar/interaction';
@@ -11,12 +12,18 @@ const Calendar = () => {
   const calendarWrapperRef = useRef<HTMLDivElement>(null);
   const calendarRef = useRef<FullCalendar>(null);
 
-  const calendarMethods = new CalendarMethods(calendarRef.current);
+  const router = useRouter();
+  const { query } = router;
 
   const [calendarEvents, setEvents] = useState<IEvent[]>([]);
 
-  const calendarYear = calendarMethods.getCalendarYear();
-  const calendarMonth = calendarMethods.getCalendarMonth();
+  // 달력에 따라 url route 바꾸고 싶음.
+  // useEffect(() => {
+  //   const calendarYear = CalendarMethods.getCalendarYear(calendarRef.current);
+  //   const calendarMonth = CalendarMethods.getCalendarMonth(calendarRef.current);
+
+  //   // router.replace(`calendar/${calendarYear}/${calendarMonth}`);
+  // }, []);
 
   const addEvent = (arg: DateSelectArg) => {
     const id = Date.now().toString();
@@ -31,10 +38,10 @@ const Calendar = () => {
       throttle((e: WheelEvent) => {
         if (calendarWrapperRef.current?.contains(e.target as Node)) {
           if (e.deltaY > 0) {
-            calendarMethods.setCalendarNext();
+            CalendarMethods.setCalendarNext(calendarRef.current);
           }
           if (e.deltaY < 0) {
-            calendarMethods.setCalendarPrev();
+            CalendarMethods.setCalendarPrev(calendarRef.current);
           }
         }
       }, 800),
