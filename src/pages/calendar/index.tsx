@@ -1,18 +1,25 @@
-import React, { useRef, useState } from 'react';
-import FullCalendar from '@fullcalendar/react'; // must go before plugins
+import React, { useEffect, useRef, useState } from 'react';
+import FullCalendar, { type DateSelectArg } from '@fullcalendar/react'; // must go before plugins
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import { IEvent, IDate } from '@/types/calendar';
 
 const Calendar = () => {
-  const calRef = useRef(null);
+  const calRef = useRef<FullCalendar>(null);
 
-  const _events = [
-    { title: 'event 1', start: '2022-10-01', end: '2022-10-03' },
-    { title: 'event 2', start: '2022-10-04', end: '2022-10-06' },
-  ];
+  const [calendarEvents, setEvents] = useState<IEvent[]>([]);
 
-  const [calendarEvents, setEvents] = useState(_events);
+  const calendarYear = calRef.current?.getApi().view.currentStart.toISOString().slice(0, 4);
+  const calendarMonth = calRef.current?.getApi().view.currentStart.toISOString().slice(5, 7);
 
+  const addEvent = (arg: DateSelectArg) => {
+    console.log('add new event');
+    const id = Date.now().toString();
+    setEvents((prev) => [
+      ...prev,
+      { id, title: 'aa', start: arg.startStr as IDate, end: arg.endStr as IDate },
+    ]);
+  };
   return (
     <>
       <FullCalendar
@@ -23,11 +30,9 @@ const Calendar = () => {
         editable
         droppable
         events={calendarEvents}
-        select={(arg) => {
-          console.log(arg);
-          if (calRef.current) {
-            const cal = calRef.current;
-          }
+        select={addEvent}
+        eventClick={(info) => {
+          console.log(info.event.id);
         }}
       />
     </>

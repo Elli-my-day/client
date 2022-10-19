@@ -40,7 +40,7 @@ const Navigation = () => {
           </Link>
         </ListItem>
         <ListItem height="5rem">
-          <Link href="/study">
+          <Link href="/calendar">
             <S.ListLink open={navOpen}>
               <AiOutlineCalendar size="20" />
               {navOpen && <h2 className="ml-4 text-2xl">일정</h2>}
