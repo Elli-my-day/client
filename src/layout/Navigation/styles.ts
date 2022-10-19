@@ -15,7 +15,7 @@ export const LogoWrapper = styled.div`
 `;
 
 export const ListLink = styled.a<{ open: boolean }>`
-  ${tw`w-full flex justify-center items-center`}
+  ${tw`w-full flex justify-center items-center px-5 py-6`}
   ${({ open }) => open && tw`justify-start`}
 `;
 

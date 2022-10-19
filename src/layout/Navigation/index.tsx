@@ -9,6 +9,7 @@ import { CgMinimizeAlt } from 'react-icons/cg';
 import { VscColorMode } from 'react-icons/vsc';
 import { FiBook } from 'react-icons/fi';
 import { HiOutlinePencil } from 'react-icons/hi';
+import { AiOutlineCalendar } from 'react-icons/ai';
 
 import * as S from './styles';
 
@@ -21,7 +22,8 @@ const Navigation = () => {
         <S.LogoWrapper>
           <Logo />
         </S.LogoWrapper>
-        <ListItem>
+
+        <ListItem height="5rem">
           <Link href="/diary">
             <S.ListLink open={navOpen}>
               <FiBook size="20" />
@@ -29,11 +31,19 @@ const Navigation = () => {
             </S.ListLink>
           </Link>
         </ListItem>
-        <ListItem>
+        <ListItem height="5rem">
           <Link href="/study">
             <S.ListLink open={navOpen}>
               <HiOutlinePencil size="20" />
               {navOpen && <h2 className="ml-4 text-2xl">서재</h2>}
+            </S.ListLink>
+          </Link>
+        </ListItem>
+        <ListItem height="5rem">
+          <Link href="/study">
+            <S.ListLink open={navOpen}>
+              <AiOutlineCalendar size="20" />
+              {navOpen && <h2 className="ml-4 text-2xl">일정</h2>}
             </S.ListLink>
           </Link>
         </ListItem>
