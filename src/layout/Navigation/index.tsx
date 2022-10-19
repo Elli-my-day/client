@@ -1,9 +1,17 @@
 import React from 'react';
+import Link from 'next/link';
 import ListItem from '@/components/ListItem';
-import * as S from './styles';
 import useNavOpen from '@/hooks/useNavOpen';
 import Logo from '@/components/Logo';
 import Button from '@/components/Button';
+import IconButton from '@/components/IconButton';
+import { CgMinimizeAlt } from 'react-icons/cg';
+import { VscColorMode } from 'react-icons/vsc';
+import { FiBook } from 'react-icons/fi';
+import { HiOutlinePencil } from 'react-icons/hi';
+import { AiOutlineCalendar } from 'react-icons/ai';
+
+import * as S from './styles';
 
 const Navigation = () => {
   const { navOpen, handleNavOpen } = useNavOpen();
@@ -13,13 +21,44 @@ const Navigation = () => {
       <S.TopNav>
         <S.LogoWrapper>
           <Logo />
-          <button onClick={handleNavOpen}> {navOpen ? '닫기' : '열기'}</button>
         </S.LogoWrapper>
-        <ListItem>일기</ListItem>
-        <ListItem>도서관</ListItem>
+
+        <ListItem height="5rem">
+          <Link href="/diary">
+            <S.ListLink open={navOpen}>
+              <FiBook size="20" />
+              {navOpen && <h2 className="ml-4 text-2xl">일기</h2>}
+            </S.ListLink>
+          </Link>
+        </ListItem>
+        <ListItem height="5rem">
+          <Link href="/study">
+            <S.ListLink open={navOpen}>
+              <HiOutlinePencil size="20" />
+              {navOpen && <h2 className="ml-4 text-2xl">서재</h2>}
+            </S.ListLink>
+          </Link>
+        </ListItem>
+        <ListItem height="5rem">
+          <Link href="/study">
+            <S.ListLink open={navOpen}>
+              <AiOutlineCalendar size="20" />
+              {navOpen && <h2 className="ml-4 text-2xl">일정</h2>}
+            </S.ListLink>
+          </Link>
+        </ListItem>
       </S.TopNav>
+
       <S.BottomNav>
-        <Button aria-label="mode">mode</Button>
+        <S.ButtonsWrapper open={navOpen}>
+          <IconButton aria-label="mode">
+            <VscColorMode size="20" />
+          </IconButton>
+          <IconButton onClick={handleNavOpen}>
+            <CgMinimizeAlt size="20" />
+          </IconButton>
+        </S.ButtonsWrapper>
+
         <S.LoginWrapper>
           <Button aria-label="login">Login</Button>
         </S.LoginWrapper>

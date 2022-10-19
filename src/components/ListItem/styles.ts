@@ -1,13 +1,9 @@
-import { HoverEffect } from '@/base/HoverEffect';
 import styled from 'styled-components';
+import tw from 'twin.macro';
 
 export const Container = styled.div<{ height: string }>`
-  width: 100%;
   height: ${(props) => props.height};
-  position: relative;
-  padding: ${(props) => props.theme.spacing(1.5)};
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  ${HoverEffect}
+  ${tw`w-full relative flex items-center cursor-pointer
+	hover:text-primary-color hover:bg-gray-color 
+	focus:text-primary-color`}
 `;

@@ -1,36 +1,33 @@
 import styled from 'styled-components';
+import tw from 'twin.macro';
 
 export const NavigationContainer = styled.div`
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  border-right: 1px solid ${(props) => props.theme.palette.border};
-  position: sticky;
-  top: 0;
+  ${tw`w-full h-screen flex flex-col justify-between items-start 
+	sticky top-0 border-r border-gray-300`}
 `;
 
 export const TopNav = styled.div`
-  width: 100%;
+  ${tw`w-full`}
 `;
 
 export const LogoWrapper = styled.div`
-  width: 100%;
-  height: ${(props) => props.theme.size.height?.header};
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
+  ${tw`w-full h-20 flex justify-between items-center p-2`}
+`;
+
+export const ListLink = styled.a<{ open: boolean }>`
+  ${tw`w-full flex justify-center items-center px-5 py-6`}
+  ${({ open }) => open && tw`justify-start`}
 `;
 
 export const BottomNav = styled.div`
-  width: 100%;
+  ${tw`w-full`}
+`;
+
+export const ButtonsWrapper = styled.div<{ open: boolean }>`
+  ${tw`flex justify-around items-center p-2`}
+  ${({ open }) => !open && tw`flex-col`}
 `;
 
 export const LoginWrapper = styled.div`
-  width: 100%;
-  height: ${(props) => props.theme.size.height?.header};
-  border: 1px solid black;
+  ${tw`w-full h-20 border-t border-gray-300`}
 `;
