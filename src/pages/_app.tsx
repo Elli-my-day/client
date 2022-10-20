@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app';
+import Modal from 'react-modal';
 import Layout from '@/layout/index';
 import NavOpenProvider from '@/context/NavOpenProvider';
 import GlobalStyle from '@/styles/GlobalStyle';
