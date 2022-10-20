@@ -51,7 +51,7 @@ const Calendar = () => {
   const selectDate = (arg: DateSelectArg) => {
     const id = Date.now().toString();
     setSelectedDate(() => ({ id, start: arg.startStr as IDate, end: arg.endStr as IDate }));
-    addEvent(id, arg.startStr as IDate, arg.endStr as IDate);
+    addEvent(id, selectedDate.start, selectedDate.end);
     openAddModal();
   };
 
@@ -121,6 +121,8 @@ const Calendar = () => {
         editable
         droppable
         events={calendarEvents}
+        eventBackgroundColor="#a78bfa"
+        eventBorderColor="#a78bfa"
         select={selectDate}
         eventClick={clickEvent}
         datesSet={(event) => {

@@ -17,9 +17,26 @@ const CalendarAdder = ({ start, end, ignore, save }: IProps) => {
       <ModalHeader title="Event Adder" clickClose={ignore} />
 
       <S.Content>
-        <div>from : {start}</div>
-        <div>to : {end}</div>
-        <div>title</div>
+        <S.Field>
+          <S.Label>start</S.Label>
+          <S.Input disabled={true}>
+            <input type="date" value={start} readOnly />
+          </S.Input>
+        </S.Field>
+
+        <S.Field>
+          <S.Label>end</S.Label>
+          <S.Input disabled={true}>
+            <input type="date" value={end} readOnly />
+          </S.Input>
+        </S.Field>
+
+        <S.Field>
+          <S.Label>title</S.Label>
+          <S.Input>
+            <input />
+          </S.Input>
+        </S.Field>
       </S.Content>
 
       <ModalFooter clickCancel={ignore} clickSave={save} />
