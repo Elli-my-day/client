@@ -1,5 +1,9 @@
 import { useState } from 'react';
 
+/**
+ *
+ * @returns open and control funcs
+ */
 const useModal = () => {
   const [isOpen, setIsOpen] = useState(false);
 

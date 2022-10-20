@@ -1,6 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useRouter } from 'next/router';
-import { throttle } from 'lodash';
+import React, { useRef, useState } from 'react';
 import FullCalendar, { type DateSelectArg, EventClickArg } from '@fullcalendar/react'; // must go before plugins
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -8,35 +6,22 @@ import CalendarAdder from '@/components/CalendarAdder';
 import CalendarUpdater from '@/components/CalendarUpdater';
 import Modal from '@/base/Modal';
 import useModal from '@/base/Modal/useModal';
-import CalendarMethods from '@/lib/calendar';
-import DateMethods from '@/lib/date';
 import { IEvent, IDate } from '@/types/calendar';
 import * as S from './styles';
+import useWheel from '@/components/Calendar/hooks/useWheel';
+import useUrlSync from '@/components/Calendar/hooks/useURLSync';
+import useEvents from '@/components/Calendar/hooks/useEvents';
+
+export interface ICalendarRef {
+  calendarRef: React.RefObject<FullCalendar>;
+  calendarWrapperRef: React.RefObject<HTMLDivElement>;
+}
 
 const Calendar = () => {
   const calendarWrapperRef = useRef<HTMLDivElement>(null);
   const calendarRef = useRef<FullCalendar>(null);
 
-  const router = useRouter();
-  const { date } = router.query;
-
-  const [calendarEvents, setEvents] = useState<IEvent[]>([]);
-
-  // URL => calendar
-  useEffect(() => {
-    if (date?.length === 2) {
-      // ['2022', '10']
-      const routeYear = date[0];
-      const routeMonth = date[1];
-
-      const yearOk = DateMethods.validateYear(routeYear);
-      const monthOk = DateMethods.validateMonth(routeMonth);
-
-      if (yearOk && monthOk) {
-        CalendarMethods.setCalendarDate(calendarRef.current, routeYear, routeMonth, '01');
-      }
-    }
-  }, [date]);
+  const { calendarEvents, addEvent, removeEvent, updateEvent } = useEvents();
 
   const [temporaryEvent, setTemporaryEvent] = useState<{
     id: string;
@@ -53,68 +38,45 @@ const Calendar = () => {
   // select할 때 임시 event 넣어주는 방향으로 가야 하나??
   const selectDate = (arg: DateSelectArg) => {
     const id = Date.now().toString();
-    const title = id;
+    const title = '오늘 뭐하지?';
+
+    const start = arg.startStr as IDate;
+    const end = arg.endStr as IDate;
 
     setTemporaryEvent(() => ({
       id,
       title,
-      start: arg.startStr as IDate,
-      end: arg.endStr as IDate,
+      start,
+      end,
     }));
-    addEvent(id, arg.startStr as IDate, arg.endStr as IDate, title);
+    addEvent(id, title, start, end);
     openAddModal();
   };
 
   const clickEvent = (info: EventClickArg) => {
-    console.log(info.event.id);
     // removeEvent(info.event.id);
     openUpdateModal();
   };
 
-  const addEvent = (id: string, startStr: IDate, endStr: IDate, title: string) => {
-    setEvents((prev) => [...prev, { id, title, start: startStr, end: endStr }]);
-  };
-
-  const removeEvent = (id: string) => {
-    setEvents((prev) => [...prev.filter((ele) => ele.id !== id)]);
-  };
-
-  const updateEvent = (id: string, title: string) => {
-    setEvents((prev) => [...prev.map((ele) => (ele.id === id ? { ...ele, title } : ele))]);
-  };
-
-  const throttledScroll = useMemo(
-    () =>
-      throttle((e: WheelEvent) => {
-        if (calendarWrapperRef.current?.contains(e.target as Node)) {
-          if (e.deltaY > 0) {
-            CalendarMethods.setCalendarNext(calendarRef.current);
-          }
-          if (e.deltaY < 0) {
-            CalendarMethods.setCalendarPrev(calendarRef.current);
-          }
-        }
-      }, 800),
-    []
-  );
-
-  useEffect(() => {
-    window.addEventListener('wheel', throttledScroll);
-
-    return () => window.removeEventListener('wheel', throttledScroll);
-  }, [throttledScroll]);
-
-  const { isOpen: isAddModalOpen, openModal: openAddModal, closeModal: closeAddModal } = useModal();
-
   const ignoreAdd = () => {
-    removeEvent(temporaryEvent.id);
+    const { id } = temporaryEvent;
+
+    removeEvent(id);
     closeAddModal();
   };
 
   const saveAdd = () => {
-    updateEvent(temporaryEvent.id, temporaryEvent.title);
+    const { id, title } = temporaryEvent;
+
+    updateEvent(id, title);
     closeAddModal();
   };
+
+  useWheel({ calendarRef, calendarWrapperRef });
+
+  const { detectMonthChange } = useUrlSync({ calendarRef });
+
+  const { isOpen: isAddModalOpen, openModal: openAddModal, closeModal: closeAddModal } = useModal();
 
   const {
     isOpen: isUpdateModalOpen,
@@ -136,27 +98,7 @@ const Calendar = () => {
         eventBorderColor="#a78bfa"
         select={selectDate}
         eventClick={clickEvent}
-        datesSet={(event) => {
-          // detect year, month change
-          const midDate = new Date((event.start.getTime() + event.end.getTime()) / 2);
-          const year = DateMethods.getYear(midDate);
-          const month = DateMethods.getMonth(midDate);
-
-          // 맨처음 달력나올때, default today. url에 날짝 적혀있어도 해당 이벤트 발생해서 today로 회귀.
-          // today로 갔다가 이동하려해도 url에는 아직 없어서 url도 같이 안 바뀜.?
-          // 보장이 안되서 좀 불안.
-          if (date && date.length === 2) {
-            const routeYear = date[0];
-            const routeMonth = date[1];
-
-            const yearOk = DateMethods.validateYear(routeYear);
-            const monthOk = DateMethods.validateMonth(routeMonth);
-
-            if (yearOk && monthOk) {
-              router.replace(`/calendar/${year}/${month}`);
-            }
-          }
-        }}
+        datesSet={detectMonthChange}
       />
       <Modal isOpen={isAddModalOpen} requestClose={ignoreAdd}>
         <CalendarAdder

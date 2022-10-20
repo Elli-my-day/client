@@ -5,6 +5,7 @@ import useNavOpen from '@/hooks/useNavOpen';
 import Logo from '@/components/Logo';
 import Button from '@/base/Button';
 import IconButton from '@/base/IconButton';
+import DateMethods from '@/lib/date';
 import { CgMinimizeAlt } from 'react-icons/cg';
 import { VscColorMode } from 'react-icons/vsc';
 import { FiBook } from 'react-icons/fi';
@@ -15,6 +16,9 @@ import * as S from './styles';
 
 const Navigation = () => {
   const { navOpen, handleNavOpen } = useNavOpen();
+
+  const year = DateMethods.getYear(new Date());
+  const month = DateMethods.getMonth(new Date());
 
   return (
     <S.NavigationContainer>
@@ -40,7 +44,7 @@ const Navigation = () => {
           </Link>
         </ListItem>
         <ListItem height="5rem">
-          <Link href="/calendar">
+          <Link href={`/calendar/${year}/${month}`}>
             <S.ListLink open={navOpen}>
               <AiOutlineCalendar size="20" />
               {navOpen && <h2 className="ml-4 text-2xl">일정</h2>}
