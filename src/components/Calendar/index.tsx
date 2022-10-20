@@ -6,11 +6,11 @@ import CalendarAdder from '@/components/CalendarAdder';
 import CalendarUpdater from '@/components/CalendarUpdater';
 import Modal from '@/base/Modal';
 import useModal from '@/base/Modal/useModal';
-import { IEvent, IDate } from '@/types/calendar';
-import * as S from './styles';
 import useWheel from '@/components/Calendar/hooks/useWheel';
 import useUrlSync from '@/components/Calendar/hooks/useURLSync';
-import useEvents from '@/components/Calendar/hooks/useEvents';
+import { IDate } from '@/types/calendar';
+import CalendarMethods from '@/lib/calendar';
+import * as S from './styles';
 
 export interface ICalendarRef {
   calendarRef: React.RefObject<FullCalendar>;
@@ -21,21 +21,13 @@ const Calendar = () => {
   const calendarWrapperRef = useRef<HTMLDivElement>(null);
   const calendarRef = useRef<FullCalendar>(null);
 
-  const { calendarEvents, addEvent, removeEvent, updateEvent } = useEvents();
+  const [selectedEventId, setSelectedEventId] = useState<string>('');
+  const [selectedEventStart, setSelectedEventStart] = useState<IDate>();
+  const [selectedEventEnd, setSelectedEventEnd] = useState<IDate>();
 
-  const [temporaryEvent, setTemporaryEvent] = useState<{
-    id: string;
-    start: IDate;
-    end: IDate;
-    title: string;
-  }>({
-    id: '',
-    start: '1990-01-01',
-    end: '1990-01-01',
-    title: '',
-  });
+  // event id 만 가지고 있고, getEventById로 관리하면 더 좋을듯?
+  // event.setStart같은 함수들 있는데, 안쓰고 setState로 관리하는 것이 맞나??
 
-  // select할 때 임시 event 넣어주는 방향으로 가야 하나??
   const selectDate = (arg: DateSelectArg) => {
     const id = Date.now().toString();
     const title = '오늘 뭐하지?';
@@ -43,32 +35,24 @@ const Calendar = () => {
     const start = arg.startStr as IDate;
     const end = arg.endStr as IDate;
 
-    setTemporaryEvent(() => ({
-      id,
-      title,
-      start,
-      end,
-    }));
-    addEvent(id, title, start, end);
+    setSelectedEventId(() => id);
+    setSelectedEventStart(() => start);
+    setSelectedEventEnd(() => end);
+    CalendarMethods.addEvent(calendarRef.current, id, title, start, end);
     openAddModal();
   };
 
   const clickEvent = (info: EventClickArg) => {
+    // const event = calendarRef.current?.getApi().getEventById(info.event.id);
+
+    // event?.setEnd(new Date(2022, 10, 28));
+
     // removeEvent(info.event.id);
     openUpdateModal();
   };
 
-  const ignoreAdd = () => {
-    const { id } = temporaryEvent;
-
-    removeEvent(id);
-    closeAddModal();
-  };
-
-  const saveAdd = () => {
-    const { id, title } = temporaryEvent;
-
-    updateEvent(id, title);
+  const close = () => {
+    CalendarMethods.removeEvent(calendarRef.current, selectedEventId);
     closeAddModal();
   };
 
@@ -93,19 +77,20 @@ const Calendar = () => {
         selectable
         editable
         droppable
-        events={calendarEvents}
+        events={[]}
         eventBackgroundColor="#a78bfa"
         eventBorderColor="#a78bfa"
         select={selectDate}
         eventClick={clickEvent}
         datesSet={detectMonthChange}
       />
-      <Modal isOpen={isAddModalOpen} requestClose={ignoreAdd}>
+      <Modal isOpen={isAddModalOpen} requestClose={close}>
         <CalendarAdder
-          temporaryEvent={temporaryEvent}
-          setTemporaryEvent={setTemporaryEvent}
-          ignore={ignoreAdd}
-          save={saveAdd}
+          calendarRef={calendarRef}
+          closeModal={closeAddModal}
+          eventId={selectedEventId}
+          eventStart={selectedEventStart}
+          eventEnd={selectedEventEnd}
         />
       </Modal>
       <Modal isOpen={isUpdateModalOpen} requestClose={closeUpdateModal}>
