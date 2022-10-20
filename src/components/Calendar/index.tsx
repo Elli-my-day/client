@@ -38,20 +38,30 @@ const Calendar = () => {
     }
   }, [date]);
 
-  const [selectedDate, setSelectedDate] = useState<{
+  const [temporaryEvent, setTemporaryEvent] = useState<{
     id: string;
     start: IDate;
     end: IDate;
+    title: string;
   }>({
     id: '',
     start: '1990-01-01',
     end: '1990-01-01',
+    title: '',
   });
 
+  // select할 때 임시 event 넣어주는 방향으로 가야 하나??
   const selectDate = (arg: DateSelectArg) => {
     const id = Date.now().toString();
-    setSelectedDate(() => ({ id, start: arg.startStr as IDate, end: arg.endStr as IDate }));
-    addEvent(id, selectedDate.start, selectedDate.end);
+    const title = id;
+
+    setTemporaryEvent(() => ({
+      id,
+      title,
+      start: arg.startStr as IDate,
+      end: arg.endStr as IDate,
+    }));
+    addEvent(id, arg.startStr as IDate, arg.endStr as IDate, title);
     openAddModal();
   };
 
@@ -61,8 +71,8 @@ const Calendar = () => {
     openUpdateModal();
   };
 
-  const addEvent = (id: string, startStr: IDate, endStr: IDate) => {
-    setEvents((prev) => [...prev, { id, title: 'aa', start: startStr, end: endStr }]);
+  const addEvent = (id: string, startStr: IDate, endStr: IDate, title: string) => {
+    setEvents((prev) => [...prev, { id, title, start: startStr, end: endStr }]);
   };
 
   const removeEvent = (id: string) => {
@@ -97,11 +107,12 @@ const Calendar = () => {
   const { isOpen: isAddModalOpen, openModal: openAddModal, closeModal: closeAddModal } = useModal();
 
   const ignoreAdd = () => {
-    removeEvent(selectedDate.id);
+    removeEvent(temporaryEvent.id);
     closeAddModal();
   };
 
   const saveAdd = () => {
+    updateEvent(temporaryEvent.id, temporaryEvent.title);
     closeAddModal();
   };
 
@@ -149,8 +160,8 @@ const Calendar = () => {
       />
       <Modal isOpen={isAddModalOpen} requestClose={ignoreAdd}>
         <CalendarAdder
-          start={selectedDate.start}
-          end={selectedDate.end}
+          temporaryEvent={temporaryEvent}
+          setTemporaryEvent={setTemporaryEvent}
           ignore={ignoreAdd}
           save={saveAdd}
         />
@@ -159,9 +170,9 @@ const Calendar = () => {
         <div>update modal</div>
         {/* <CalendarUpdater
           closeModal={closeUpdateModal}
-          eventId={selectedDate.id}
-          start={selectedDate.start}
-          end={selectedDate.end}
+          eventId={temporaryEvent.id}
+          start={temporaryEvent.start}
+          end={temporaryEvent.end}
           removeEvent={removeEvent}
         /> */}
       </Modal>
