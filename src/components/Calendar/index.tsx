@@ -96,6 +96,15 @@ const Calendar = () => {
 
   const { isOpen: isAddModalOpen, openModal: openAddModal, closeModal: closeAddModal } = useModal();
 
+  const ignoreAdd = () => {
+    removeEvent(selectedDate.id);
+    closeAddModal();
+  };
+
+  const saveAdd = () => {
+    closeAddModal();
+  };
+
   const {
     isOpen: isUpdateModalOpen,
     openModal: openUpdateModal,
@@ -136,13 +145,12 @@ const Calendar = () => {
           }
         }}
       />
-      <Modal isOpen={isAddModalOpen} requestClose={closeAddModal}>
+      <Modal isOpen={isAddModalOpen} requestClose={ignoreAdd}>
         <CalendarAdder
-          closeModal={closeAddModal}
-          eventId={selectedDate.id}
           start={selectedDate.start}
           end={selectedDate.end}
-          removeEvent={removeEvent}
+          ignore={ignoreAdd}
+          save={saveAdd}
         />
       </Modal>
       <Modal isOpen={isUpdateModalOpen} requestClose={closeUpdateModal}>

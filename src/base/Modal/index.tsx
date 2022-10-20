@@ -28,6 +28,7 @@ const Modal = ({ children, isOpen, requestClose }: IProps) => {
     <ReactModal
       isOpen={isOpen}
       onRequestClose={requestClose}
+      closeTimeoutMS={200}
       style={customStyles}
       contentLabel="Modal"
     >

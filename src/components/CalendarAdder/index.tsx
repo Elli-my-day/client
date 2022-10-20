@@ -1,31 +1,28 @@
 import React from 'react';
+import ModalHeader from '@/base/ModalHeader';
+import ModalFooter from '@/base/ModalFooter';
 import { IDate } from '@/types/calendar';
 import * as S from './styles';
 
 interface IProps {
-  closeModal: () => void;
-  eventId: string;
   start: IDate;
   end: IDate;
-  removeEvent: (id: string) => void;
+  ignore: () => void;
+  save: () => void;
 }
 
-const CalendarAdder = ({ closeModal, eventId, start, end, removeEvent }: IProps) => {
+const CalendarAdder = ({ start, end, ignore, save }: IProps) => {
   return (
     <S.Container>
-      <h2>Calendar Adder</h2>
-      <div>from : {start}</div>
-      <div>to : {end}</div>
-      <div>title</div>
-      <button
-        onClick={() => {
-          removeEvent(eventId);
-          closeModal();
-        }}
-      >
-        cancel
-      </button>
-      <button onClick={closeModal}>ok</button>
+      <ModalHeader title="Event Adder" clickClose={ignore} />
+
+      <S.Content>
+        <div>from : {start}</div>
+        <div>to : {end}</div>
+        <div>title</div>
+      </S.Content>
+
+      <ModalFooter clickCancel={ignore} clickSave={save} />
     </S.Container>
   );
 };
