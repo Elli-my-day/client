@@ -17,8 +17,12 @@ class CalendarMethods {
     calendar?.getApi().getCurrentData().calendarApi.prev();
   }
 
-  public setCalendarDate(calendar: FullCalendar | null, year: number, month: number, day: number) {
-    calendar?.getApi().gotoDate(new Date(year, month, day));
+  public setCalendarDate(calendar: FullCalendar | null, year: string, month: string, day: string) {
+    const newYear = Number(year);
+    const newMonth = Number(month) - 1;
+    const newDay = Number(day);
+
+    calendar?.getApi().gotoDate(new Date(newYear, newMonth, newDay));
   }
 }
 
