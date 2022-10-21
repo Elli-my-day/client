@@ -11,6 +11,8 @@ import useUrlSync from '@/components/Calendar/hooks/useUrlSync';
 import { IDate } from '@/types/calendar';
 import CalendarMethods from '@/lib/calendar';
 import * as S from './styles';
+import axios from 'axios';
+import axiosIns from '@/lib/axios';
 
 export interface ICalendarRef {
   calendarRef: React.RefObject<FullCalendar>;
@@ -75,6 +77,13 @@ const Calendar = () => {
 
   return (
     <S.CalendarWrapper ref={calendarWrapperRef}>
+      {/* <button
+        onClick={() => {
+          axiosIns.get('/test/info');
+        }}
+      >
+        aa
+      </button> */}
       <FullCalendar
         ref={calendarRef}
         plugins={[dayGridPlugin, interactionPlugin]}
