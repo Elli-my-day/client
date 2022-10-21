@@ -7,7 +7,7 @@ import CalendarUpdater from '@/components/CalendarUpdater';
 import Modal from '@/base/Modal';
 import useModal from '@/base/Modal/useModal';
 import useWheel from '@/components/Calendar/hooks/useWheel';
-import useUrlSync from '@/components/Calendar/hooks/useURLSync';
+import useUrlSync from '@/components/Calendar/hooks/useUrlSync';
 import { IDate } from '@/types/calendar';
 import CalendarMethods from '@/lib/calendar';
 import * as S from './styles';
@@ -17,45 +17,50 @@ export interface ICalendarRef {
   calendarWrapperRef: React.RefObject<HTMLDivElement>;
 }
 
+export interface ICalendarModalProps {
+  calendarRef: React.RefObject<FullCalendar>;
+  closeModal: () => void;
+  eventId: string;
+}
+
+// calendarRef를 context에 넣어서 사용할까..?
+
 const Calendar = () => {
   const calendarWrapperRef = useRef<HTMLDivElement>(null);
   const calendarRef = useRef<FullCalendar>(null);
 
   const [selectedEventId, setSelectedEventId] = useState<string>('');
-  const [selectedEventStart, setSelectedEventStart] = useState<IDate>();
-  const [selectedEventEnd, setSelectedEventEnd] = useState<IDate>();
-
-  // event id 만 가지고 있고, getEventById로 관리하면 더 좋을듯?
-  // event.setStart같은 함수들 있는데, 안쓰고 setState로 관리하는 것이 맞나??
 
   const selectDate = (arg: DateSelectArg) => {
     const id = Date.now().toString();
     const title = '오늘 뭐하지?';
-
     const start = arg.startStr as IDate;
     const end = arg.endStr as IDate;
 
     setSelectedEventId(() => id);
-    setSelectedEventStart(() => start);
-    setSelectedEventEnd(() => end);
+
     CalendarMethods.addEvent(calendarRef.current, id, title, start, end);
     openAddModal();
   };
 
   const clickEvent = (info: EventClickArg) => {
-    // const event = calendarRef.current?.getApi().getEventById(info.event.id);
+    const id = info.event.id;
 
-    // event?.setEnd(new Date(2022, 10, 28));
+    const event = CalendarMethods.getEventById(calendarRef.current, id);
 
-    // removeEvent(info.event.id);
+    if (event) {
+      setSelectedEventId(() => event.id);
+    }
+
     openUpdateModal();
   };
 
-  const close = () => {
+  const stopAddEvent = () => {
     CalendarMethods.removeEvent(calendarRef.current, selectedEventId);
     closeAddModal();
   };
 
+  /* Custom Hooks */
   useWheel({ calendarRef, calendarWrapperRef });
 
   const { detectMonthChange } = useUrlSync({ calendarRef });
@@ -84,24 +89,19 @@ const Calendar = () => {
         eventClick={clickEvent}
         datesSet={detectMonthChange}
       />
-      <Modal isOpen={isAddModalOpen} requestClose={close}>
+      <Modal isOpen={isAddModalOpen} requestClose={stopAddEvent}>
         <CalendarAdder
           calendarRef={calendarRef}
           closeModal={closeAddModal}
           eventId={selectedEventId}
-          eventStart={selectedEventStart}
-          eventEnd={selectedEventEnd}
         />
       </Modal>
       <Modal isOpen={isUpdateModalOpen} requestClose={closeUpdateModal}>
-        <div>update modal</div>
-        {/* <CalendarUpdater
+        <CalendarUpdater
+          calendarRef={calendarRef}
           closeModal={closeUpdateModal}
-          eventId={temporaryEvent.id}
-          start={temporaryEvent.start}
-          end={temporaryEvent.end}
-          removeEvent={removeEvent}
-        /> */}
+          eventId={selectedEventId}
+        />
       </Modal>
     </S.CalendarWrapper>
   );

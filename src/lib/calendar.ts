@@ -1,6 +1,11 @@
 import { IDate } from '@/types/calendar';
 import FullCalendar from '@fullcalendar/react';
 
+interface INewData {
+  title?: string | undefined;
+  start?: IDate | undefined;
+  end?: IDate | undefined;
+}
 class CalendarMethods {
   public getCalendarYear(calendar: FullCalendar | null) {
     return calendar?.getApi().view.currentStart.toISOString().slice(0, 4);
@@ -26,6 +31,10 @@ class CalendarMethods {
     calendar?.getApi().gotoDate(new Date(newYear, newMonth, newDay));
   }
 
+  public getEventById(calendar: FullCalendar | null, id: string) {
+    return calendar?.getApi().getEventById(id);
+  }
+
   public addEvent(
     calendar: FullCalendar | null,
     id: string,
@@ -41,9 +50,20 @@ class CalendarMethods {
     event?.remove();
   }
 
-  public updateEvent(calendar: FullCalendar | null, id: string, title: string) {
+  public updateEvent(calendar: FullCalendar | null, id: string, newData: INewData) {
     const event = calendar?.getApi().getEventById(id);
-    event?.setProp('title', title);
+
+    const { title, start, end } = newData;
+
+    if (title) {
+      event?.setProp('title', title);
+    }
+    if (start) {
+      event?.setStart(start);
+    }
+    if (end) {
+      event?.setEnd(end);
+    }
   }
 }
 

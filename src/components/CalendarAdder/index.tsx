@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
-import FullCalendar from '@fullcalendar/react';
 import ModalHeader from '@/base/ModalHeader';
 import ModalFooter from '@/base/ModalFooter';
+import Field from '@/base/Field';
 import CalendarMethods from '@/lib/calendar';
 import * as S from './styles';
-import { IDate } from '@/types/calendar';
+import { ICalendarModalProps } from '@/components/Calendar';
 
 // selected Date 분리 필요성
-interface IProps {
-  calendarRef: React.RefObject<FullCalendar>;
-  closeModal: () => void;
-  eventId: string;
-  eventStart: IDate | undefined;
-  eventEnd: IDate | undefined;
-}
 
-const CalendarAdder = ({ calendarRef, closeModal, eventId, eventStart, eventEnd }: IProps) => {
+const CalendarAdder = ({ calendarRef, closeModal, eventId }: ICalendarModalProps) => {
+  const eventStart = CalendarMethods.getEventById(calendarRef.current, eventId)?.startStr;
+  const eventEnd = CalendarMethods.getEventById(calendarRef.current, eventId)?.endStr;
+
   const [title, setTitle] = useState('오늘 뭐하지?');
 
   const clickClose = () => {
@@ -24,8 +20,8 @@ const CalendarAdder = ({ calendarRef, closeModal, eventId, eventStart, eventEnd 
     closeModal();
   };
 
-  const clickSave = () => {
-    CalendarMethods.updateEvent(calendarRef.current, eventId, title);
+  const saveEvent = () => {
+    CalendarMethods.updateEvent(calendarRef.current, eventId, { title });
     closeModal();
   };
 
@@ -34,36 +30,30 @@ const CalendarAdder = ({ calendarRef, closeModal, eventId, eventStart, eventEnd 
       <ModalHeader title="Event Adder" clickClose={clickClose} />
 
       <S.Content>
-        <S.Field>
-          <S.Label>start</S.Label>
-          <S.Input>
-            <input type="date" value={eventStart} readOnly />
-          </S.Input>
-        </S.Field>
-
-        <S.Field>
-          <S.Label>end</S.Label>
-          <S.Input>
-            <input type="date" value={eventEnd} readOnly />
-          </S.Input>
-        </S.Field>
-
-        <S.Field>
-          <S.Label>title</S.Label>
-          <S.Input>
-            <input
-              type="text"
-              value={title}
-              autoFocus
-              onChange={(e) => {
-                setTitle(() => e.target.value);
-              }}
-            />
-          </S.Input>
-        </S.Field>
+        <Field label="start">
+          <input type="date" value={eventStart} readOnly />
+        </Field>
+        <Field label="end">
+          <input type="date" value={eventEnd} readOnly />
+        </Field>
+        <Field label="title">
+          <input
+            type="text"
+            value={title}
+            autoFocus
+            onChange={(e) => {
+              setTitle(() => e.target.value);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                saveEvent();
+              }
+            }}
+          />
+        </Field>
       </S.Content>
 
-      <ModalFooter clickCancel={clickClose} clickSave={clickSave} />
+      <ModalFooter clickCancel={clickClose} clickSave={saveEvent} />
     </S.Container>
   );
 };
