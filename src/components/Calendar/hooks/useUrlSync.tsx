@@ -30,6 +30,8 @@ const useUrlSync = ({ calendarRef }: Pick<ICalendarRef, 'calendarRef'>) => {
   }, [date]);
 
   const detectMonthChange = (event: DatesSetArg) => {
+    console.log(event);
+
     // detect year, month change
     const midDate = new Date((event.start.getTime() + event.end.getTime()) / 2);
     const year = DateMethods.getYear(midDate);
@@ -45,7 +47,9 @@ const useUrlSync = ({ calendarRef }: Pick<ICalendarRef, 'calendarRef'>) => {
       const yearOk = DateMethods.validateYear(routeYear);
       const monthOk = DateMethods.validateMonth(routeMonth);
 
-      if (yearOk && monthOk) {
+      console.log(year, routeYear, month, routeMonth);
+
+      if (yearOk && monthOk && (year !== routeYear || month !== routeMonth)) {
         router.replace(`/calendar/${year}/${month}`);
       }
     }

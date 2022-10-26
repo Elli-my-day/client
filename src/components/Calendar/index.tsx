@@ -11,8 +11,8 @@ import useUrlSync from '@/components/Calendar/hooks/useUrlSync';
 import { IDate } from '@/types/calendar';
 import CalendarMethods from '@/lib/calendar';
 import * as S from './styles';
-import axios from 'axios';
-import axiosIns from '@/lib/axios';
+import api from '@/lib/api';
+import { useQuery } from '@tanstack/react-query';
 
 export interface ICalendarRef {
   calendarRef: React.RefObject<FullCalendar>;
@@ -75,15 +75,12 @@ const Calendar = () => {
     closeModal: closeUpdateModal,
   } = useModal();
 
+  const { data, isLoading } = useQuery(['events'], () =>
+    api.calendar.getEvents('2022-10-26', '2022-10-27')
+  );
+
   return (
     <S.CalendarWrapper ref={calendarWrapperRef}>
-      {/* <button
-        onClick={() => {
-          axiosIns.get('/test/info');
-        }}
-      >
-        aa
-      </button> */}
       <FullCalendar
         ref={calendarRef}
         plugins={[dayGridPlugin, interactionPlugin]}
@@ -92,6 +89,13 @@ const Calendar = () => {
         editable
         droppable
         events={[]}
+        // eventSources={[
+        //   {
+        //     events: async function (fetchInfo, successCallback, failureCallback) {
+        //       successCallback([{ title: 'qwe', start: '2022-10-26' }]);
+        //     },
+        //   },
+        // ]}
         eventBackgroundColor="#a78bfa"
         eventBorderColor="#a78bfa"
         select={selectDate}
