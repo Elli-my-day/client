@@ -30,8 +30,6 @@ const useUrlSync = ({ calendarRef }: Pick<ICalendarRef, 'calendarRef'>) => {
   }, [date]);
 
   const detectMonthChange = (event: DatesSetArg) => {
-    console.log(event);
-
     // detect year, month change
     const midDate = new Date((event.start.getTime() + event.end.getTime()) / 2);
     const year = DateMethods.getYear(midDate);

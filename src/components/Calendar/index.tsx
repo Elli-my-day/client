@@ -88,14 +88,16 @@ const Calendar = () => {
         selectable
         editable
         droppable
-        events={[]}
-        // eventSources={[
-        //   {
-        //     events: async function (fetchInfo, successCallback, failureCallback) {
-        //       successCallback([{ title: 'qwe', start: '2022-10-26' }]);
-        //     },
-        //   },
-        // ]}
+        events={(info, successCallback, failureCallback) => {
+          api.calendar
+            .getEvents(info.startStr, info.endStr)
+            .then((value) => {
+              successCallback(value.data);
+            })
+            .catch((err) => {
+              failureCallback(err);
+            });
+        }}
         eventBackgroundColor="#a78bfa"
         eventBorderColor="#a78bfa"
         select={selectDate}
