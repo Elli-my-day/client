@@ -8,20 +8,27 @@ import { ICalendarModalProps } from '@/components/Calendar';
 
 // selected Date 분리 필요성
 
-const CalendarAdder = ({ calendarRef, closeModal, eventId }: ICalendarModalProps) => {
+const CalendarAdder = ({
+  calendarRef,
+  closeModal,
+  eventId,
+  removeEvent,
+  updateEvent,
+}: ICalendarModalProps) => {
   const eventStart = CalendarMethods.getEventById(calendarRef.current, eventId)?.startStr;
   const eventEnd = CalendarMethods.getEventById(calendarRef.current, eventId)?.endStr;
 
   const [title, setTitle] = useState('오늘 뭐하지?');
 
   const clickClose = () => {
-    CalendarMethods.removeEvent(calendarRef.current, eventId);
+    removeEvent(eventId);
 
     closeModal();
   };
 
   const saveEvent = () => {
-    CalendarMethods.updateEvent(calendarRef.current, eventId, { title });
+    updateEvent({ id: eventId, title });
+
     closeModal();
   };
 

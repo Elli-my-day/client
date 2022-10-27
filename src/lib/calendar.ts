@@ -34,37 +34,6 @@ class CalendarMethods {
   public getEventById(calendar: FullCalendar | null, id: string) {
     return calendar?.getApi().getEventById(id);
   }
-
-  public addEvent(
-    calendar: FullCalendar | null,
-    id: string,
-    title: string,
-    startStr: IDate,
-    endStr: IDate
-  ) {
-    calendar?.getApi().addEvent({ id, title, start: startStr, end: endStr });
-  }
-
-  public removeEvent(calendar: FullCalendar | null, id: string) {
-    const event = calendar?.getApi().getEventById(id);
-    event?.remove();
-  }
-
-  public updateEvent(calendar: FullCalendar | null, id: string, newData: INewData) {
-    const event = calendar?.getApi().getEventById(id);
-
-    const { title, start, end } = newData;
-
-    if (title) {
-      event?.setProp('title', title);
-    }
-    if (start) {
-      event?.setStart(start);
-    }
-    if (end) {
-      event?.setEnd(end);
-    }
-  }
 }
 
 export default new CalendarMethods();

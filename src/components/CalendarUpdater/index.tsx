@@ -7,7 +7,12 @@ import { ICalendarModalProps } from '@/components/Calendar';
 import { IDate } from '@/types/calendar';
 import * as S from './styles';
 
-const CalendarUpdater = ({ calendarRef, closeModal, eventId }: ICalendarModalProps) => {
+const CalendarUpdater = ({
+  calendarRef,
+  closeModal,
+  eventId,
+  updateEvent,
+}: ICalendarModalProps) => {
   const eventTitle = CalendarMethods.getEventById(calendarRef.current, eventId)?.title;
   const eventStart = CalendarMethods.getEventById(calendarRef.current, eventId)?.startStr as IDate;
   const eventEnd = CalendarMethods.getEventById(calendarRef.current, eventId)?.endStr as IDate;
@@ -20,8 +25,9 @@ const CalendarUpdater = ({ calendarRef, closeModal, eventId }: ICalendarModalPro
     closeModal();
   };
 
-  const updateEvent = () => {
-    CalendarMethods.updateEvent(calendarRef.current, eventId, { title, start, end });
+  const update = () => {
+    updateEvent({ id: eventId, title: 'qw' }); // start, end도 가능하게
+
     closeModal();
   };
 
@@ -68,7 +74,7 @@ const CalendarUpdater = ({ calendarRef, closeModal, eventId }: ICalendarModalPro
         </Field>
       </S.Content>
 
-      <ModalFooter clickCancel={clickClose} clickSave={updateEvent} />
+      <ModalFooter clickCancel={clickClose} clickSave={update} />
     </S.Container>
   );
 };

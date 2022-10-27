@@ -1,15 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { type DatesSetArg } from '@fullcalendar/common';
 import DateMethods from '@/lib/date';
 import CalendarMethods from '@/lib/calendar';
 import { type ICalendarRef } from '@/components/Calendar';
+import { MM, YYYY } from '@/types/calendar';
 
 /**
  * get url query and change calendar to that date
  * @returns detect calendar month change
  */
 const useUrlSync = ({ calendarRef }: Pick<ICalendarRef, 'calendarRef'>) => {
+  const [calendarYear, setCalendarYear] = useState<YYYY>();
+  const [calendarMonth, setCalendarMonth] = useState<MM>();
+
   const router = useRouter();
   const { date } = router.query;
 
@@ -34,6 +38,8 @@ const useUrlSync = ({ calendarRef }: Pick<ICalendarRef, 'calendarRef'>) => {
     const midDate = new Date((event.start.getTime() + event.end.getTime()) / 2);
     const year = DateMethods.getYear(midDate);
     const month = DateMethods.getMonth(midDate);
+    setCalendarYear(() => year);
+    setCalendarMonth(() => month);
 
     // 맨처음 달력나올때, default today. url에 날짝 적혀있어도 해당 이벤트 발생해서 today로 회귀.
     // today로 갔다가 이동하려해도 url에는 아직 없어서 url도 같이 안 바뀜.?
@@ -53,7 +59,7 @@ const useUrlSync = ({ calendarRef }: Pick<ICalendarRef, 'calendarRef'>) => {
     }
   };
 
-  return { detectMonthChange };
+  return { calendarYear, calendarMonth, detectMonthChange };
 };
 
 export default useUrlSync;
