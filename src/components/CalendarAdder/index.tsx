@@ -2,21 +2,20 @@ import React, { useState } from 'react';
 import ModalHeader from '@/base/ModalHeader';
 import ModalFooter from '@/base/ModalFooter';
 import Field from '@/base/Field';
-import CalendarMethods from '@/lib/calendar';
 import * as S from './styles';
 import { ICalendarModalProps } from '@/components/Calendar';
 
 // selected Date 분리 필요성
 
 const CalendarAdder = ({
-  calendarRef,
   closeModal,
   eventId,
+  getEvent,
   removeEvent,
   updateEvent,
 }: ICalendarModalProps) => {
-  const eventStart = CalendarMethods.getEventById(calendarRef.current, eventId)?.startStr;
-  const eventEnd = CalendarMethods.getEventById(calendarRef.current, eventId)?.endStr;
+  const eventStart = getEvent(eventId)?.start;
+  const eventEnd = getEvent(eventId)?.end;
 
   const [title, setTitle] = useState('오늘 뭐하지?');
 

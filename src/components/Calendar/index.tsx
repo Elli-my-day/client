@@ -9,9 +9,7 @@ import useModal from '@/base/Modal/useModal';
 import useWheel from '@/components/Calendar/hooks/useWheel';
 import useUrlSync from '@/components/Calendar/hooks/useUrlSync';
 import { IDate, IEvent } from '@/types/calendar';
-import CalendarMethods from '@/lib/calendar';
 import * as S from './styles';
-import api from '@/lib/api';
 import useEvents from './hooks/useEvents';
 
 export interface ICalendarRef {
@@ -20,11 +18,22 @@ export interface ICalendarRef {
 }
 
 export interface ICalendarModalProps {
-  calendarRef: React.RefObject<FullCalendar>;
+  // calendarRef: React.RefObject<FullCalendar>;
   closeModal: () => void;
   eventId: string;
+  getEvent: (eventId: string) => IEvent | undefined;
   removeEvent: (eventId: string) => void;
-  updateEvent: ({ id, title }: { id: string; title: string }) => void;
+  updateEvent: ({
+    id,
+    title,
+    start,
+    end,
+  }: {
+    id: string;
+    title: string;
+    start?: IDate;
+    end?: IDate;
+  }) => void;
 }
 
 const Calendar = () => {
@@ -35,6 +44,10 @@ const Calendar = () => {
 
   const { events, getEvent, addEvent, removeEvent, updateEvent } = useEvents();
 
+  /**
+   * select Date
+   * @param {DateSelectArg} arg
+   */
   const selectDate = (arg: DateSelectArg) => {
     const id = Date.now().toString();
     const title = '오늘 뭐하지?';
@@ -47,6 +60,10 @@ const Calendar = () => {
     openAddModal();
   };
 
+  /**
+   * click event
+   * @param {EventClickArg} info
+   */
   const clickEvent = (info: EventClickArg) => {
     const id = info.event.id;
 
@@ -59,6 +76,9 @@ const Calendar = () => {
     }
   };
 
+  /**
+   * stop adding event
+   */
   const stopAddEvent = () => {
     removeEvent(selectedEventId);
 
@@ -99,18 +119,18 @@ const Calendar = () => {
       />
       <Modal isOpen={isAddModalOpen} requestClose={stopAddEvent}>
         <CalendarAdder
-          calendarRef={calendarRef}
           closeModal={closeAddModal}
           eventId={selectedEventId}
+          getEvent={getEvent}
           removeEvent={removeEvent}
           updateEvent={updateEvent}
         />
       </Modal>
       <Modal isOpen={isUpdateModalOpen} requestClose={closeUpdateModal}>
         <CalendarUpdater
-          calendarRef={calendarRef}
           closeModal={closeUpdateModal}
           eventId={selectedEventId}
+          getEvent={getEvent}
           removeEvent={removeEvent}
           updateEvent={updateEvent}
         />

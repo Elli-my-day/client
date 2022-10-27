@@ -2,20 +2,14 @@ import React, { useState } from 'react';
 import ModalHeader from '@/base/ModalHeader';
 import ModalFooter from '@/base/ModalFooter';
 import Field from '@/base/Field';
-import CalendarMethods from '@/lib/calendar';
 import { ICalendarModalProps } from '@/components/Calendar';
 import { IDate } from '@/types/calendar';
 import * as S from './styles';
 
-const CalendarUpdater = ({
-  calendarRef,
-  closeModal,
-  eventId,
-  updateEvent,
-}: ICalendarModalProps) => {
-  const eventTitle = CalendarMethods.getEventById(calendarRef.current, eventId)?.title;
-  const eventStart = CalendarMethods.getEventById(calendarRef.current, eventId)?.startStr as IDate;
-  const eventEnd = CalendarMethods.getEventById(calendarRef.current, eventId)?.endStr as IDate;
+const CalendarUpdater = ({ closeModal, eventId, getEvent, updateEvent }: ICalendarModalProps) => {
+  const eventTitle = getEvent(eventId)?.title || '';
+  const eventStart = getEvent(eventId)?.start as IDate;
+  const eventEnd = getEvent(eventId)?.end as IDate;
 
   const [title, setTitle] = useState(eventTitle);
   const [start, setStart] = useState<IDate>(eventStart);
@@ -26,7 +20,7 @@ const CalendarUpdater = ({
   };
 
   const update = () => {
-    updateEvent({ id: eventId, title: 'qw' }); // start, end도 가능하게
+    updateEvent({ id: eventId, title, start, end }); // start, end도 가능하게
 
     closeModal();
   };

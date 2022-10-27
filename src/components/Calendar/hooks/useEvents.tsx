@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IEvent } from '@/types/calendar';
+import { IDate, IEvent } from '@/types/calendar';
 
 const useEvents = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
@@ -17,13 +17,25 @@ const useEvents = () => {
     setEvents((prev) => [...prev.filter(({ id }) => id !== eventId)]);
   };
 
-  const updateEvent = ({ id, title }: { id: string; title: string }) => {
+  const updateEvent = ({
+    id,
+    title,
+    start,
+    end,
+  }: {
+    id: string;
+    title: string;
+    start?: IDate;
+    end?: IDate;
+  }) => {
     setEvents((prev) => [
       ...prev.map((event) => {
         if (event.id === id) {
           return {
             ...event,
             title,
+            start: start ? start : event.start,
+            end: end ? end : event.end,
           };
         } else {
           return event;
